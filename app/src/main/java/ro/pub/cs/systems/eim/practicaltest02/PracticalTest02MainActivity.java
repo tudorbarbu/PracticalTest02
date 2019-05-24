@@ -80,8 +80,9 @@ public class PracticalTest02MainActivity extends AppCompatActivity {
 
                     Log.d("mytag", "get msg");
                     // get data from client
-                    String word = bufferedReader.readLine();
-                    String letters = bufferedReader.readLine();
+                    String msg = bufferedReader.readLine();
+                    String word = msg.split(",")[0];
+                    String letters = msg.split(",")[1];
 
                     Log.d("mytag", word);Log.d("mytag", letters);
 
@@ -103,10 +104,10 @@ public class PracticalTest02MainActivity extends AppCompatActivity {
                     Elements elements = element.getElementsByTag("string");
                     for (Element e : elements)
                         //Log.d("mytag", e.toString().split(" ")[1].split("\n")[0]);
-                        result += e.toString().split(" ")[1].split("\n")[0] + ", ";
+                        result += e.toString().split(" ")[1].split("\n")[0] + " ";
                     // send result
 
-                    printWriter.println(result.substring(0, result.length() - 2));
+                    printWriter.println(result.substring(0, result.length() - 1));
                     printWriter.flush();
 
                     socket.close();
@@ -142,16 +143,15 @@ public class PracticalTest02MainActivity extends AppCompatActivity {
                     return;
                 }
                 Log.d("mytag", "send msg");
-                printWriter.println(word);
+                printWriter.println(word + "," + letters);
                 printWriter.flush();
-                printWriter.println(letters);
-                printWriter.flush();
-                String words = "";
-                String result;
-                while ((result = bufferedReader.readLine()) != null) {
-                    words = words + result;
-
-                }
+                //printWriter.println(letters);
+                //printWriter.flush();
+                String words = bufferedReader.readLine();
+//                String result;
+//                while ((result = bufferedReader.readLine()) != null) {
+//                    words = words + result;
+//                }
 
                 final String WORDS = words;
                 ((TextView)findViewById(R.id.result_text)).post(new Runnable() {
